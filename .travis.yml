@@ -1,4 +1,5 @@
-language: swift
-xcode_project: PortfolioWatch.xcodeproj # path to your xcodeproj folder
-xcode_scheme: PortfolioWatchTests
-xcode_destination: platform=iOS Simulator,OS=10.1,name=iPad Pro (9.7-inch)
+language: objective-c
+osx_image: xcode10.2
+
+script:
+  - fastlane ci
