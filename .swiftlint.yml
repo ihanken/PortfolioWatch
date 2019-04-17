@@ -6,7 +6,9 @@ opt_in_rules:
 - empty_string
 
 included:
-  - PortfolioWatch 
+  - PortfolioWatch
+  - PortfolioWatchTests
+  - PortfolioWatchUITests
 excluded:
   - Carthage
   - Pods
