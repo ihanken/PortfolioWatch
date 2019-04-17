@@ -51,6 +51,7 @@ platform :ios do
 
     desc "Run all checks for CI"
     lane :ci do
+        test
         danger(
             danger_id: "ci",
             dangerfile: "./Dangerfile",
