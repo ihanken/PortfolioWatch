@@ -24,8 +24,8 @@ platform :ios do
 
   desc "Lints the code, autocorrecting any mistakes."
   lane :lint do
-    swiftlint(mode: :autocorrect, output_file: "./fastlane/output/swiftlint_output", config_file: "./.swiftlint.yml")
-    swiftlint(mode: :lint, output_file: "./fastlane/output/swiftlint_output", config_file: "./.swiftlint.yml")
+    swiftlint(mode: :autocorrect, config_file: "./.swiftlint.yml")
+    swiftlint(mode: :lint, config_file: "./.swiftlint.yml")
   end
 
   desc "Runs unit and UI tests and calculates coverage"
@@ -53,5 +53,11 @@ platform :ios do
   lane :ci do
     lint
     test
+    danger(
+      danger_id: "ci",
+      dangerfile: "./Dangerfile",
+      github_api_token: ENV["DANGER_GITHUB_API_TOKEN"]
+      use_bundle_exec: true
+    )
   end
 end
