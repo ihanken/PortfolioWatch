@@ -51,8 +51,11 @@ platform :ios do
 
     desc "Run all checks for CI"
     lane :ci do
-        lint
-        test
-        danger
+        danger(
+            danger_id: "ci",
+            dangerfile: "./Dangerfile",
+            github_api_token: ENV["DANGER_GITHUB_API_TOKEN"],
+            use_bundle_exec: true
+        )
     end
 end
