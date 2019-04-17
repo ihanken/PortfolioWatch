@@ -5,10 +5,12 @@ opt_in_rules:
 - empty_count
 - empty_string
 
+included:
+  - PortfolioWatch 
 excluded:
-- Carthage
-- Pods
-- SwiftLint/Common/3rdPartyLib
+  - Carthage
+  - Pods
+  - SwiftLint/Common/3rdPartyLib
 
 line_length:
     warning: 150
