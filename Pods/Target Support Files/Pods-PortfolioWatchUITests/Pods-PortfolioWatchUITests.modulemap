@@ -1,0 +1,6 @@
+framework module Pods_PortfolioWatchUITests {
+  umbrella header "Pods-PortfolioWatchUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
