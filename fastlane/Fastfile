@@ -53,11 +53,6 @@ platform :ios do
     lane :ci do
         lint
         test
-        danger(
-            danger_id: "ci",
-            dangerfile: "./Dangerfile",
-            github_api_token: ENV["DANGER_GITHUB_API_TOKEN"],
-            use_bundle_exec: true
-        )
+        danger
     end
 end
