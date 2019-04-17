@@ -16,48 +16,48 @@
 default_platform(:ios)
 
 platform :ios do
-  before_all do
-    setup_travis
-    bundle_install
-    cocoapods
-  end
+    before_all do
+        setup_travis
+        bundle_install
+        cocoapods
+    end
 
-  desc "Lints the code, autocorrecting any mistakes."
-  lane :lint do
-    swiftlint(mode: :autocorrect, config_file: "./.swiftlint.yml")
-    swiftlint(mode: :lint, config_file: "./.swiftlint.yml")
-  end
+    desc "Lints the code, autocorrecting any mistakes."
+    lane :lint do
+        swiftlint(mode: :autocorrect, config_file: "./.swiftlint.yml")
+        swiftlint(mode: :lint, config_file: "./.swiftlint.yml")
+    end
 
-  desc "Runs unit and UI tests and calculates coverage"
-  lane :test do
-    scan
+    desc "Runs unit and UI tests and calculates coverage"
+    lane :test do
+        scan
 
-    xcov(
-      workspace: "PortfolioWatch.xcworkspace",
-      scheme: "PortfolioWatch", 
-      output_directory:"./fastlane/output/xcov_output",
-      minimum_coverage_percentage: 90.00,
-      derived_data_path: "./DerivedData",
-      only_project_targets: true,
-      ignore_file_path: "./fastlane/.xcovignore"
-    )
-  end
+        xcov(
+            workspace: "PortfolioWatch.xcworkspace",
+            scheme: "PortfolioWatch", 
+            output_directory:"./fastlane/output/xcov_output",
+            minimum_coverage_percentage: 90.00,
+            derived_data_path: "./DerivedData",
+            only_project_targets: true,
+            ignore_file_path: "./fastlane/.xcovignore"
+        )
+    end
 
-  desc "Run all checks for code quality"
-  lane :verify do
-    lint
-    test
-  end
+    desc "Run all checks for code quality"
+    lane :verify do
+        lint
+        test
+    end
 
-  desc "Run all checks for CI"
-  lane :ci do
-    lint
-    test
-    danger(
-      danger_id: "ci",
-      dangerfile: "./Dangerfile",
-      github_api_token: ENV["DANGER_GITHUB_API_TOKEN"]
-      use_bundle_exec: true
-    )
-  end
+    desc "Run all checks for CI"
+    lane :ci do
+        lint
+        test
+        danger(
+            danger_id: "ci",
+            dangerfile: "./Dangerfile",
+            github_api_token: ENV["DANGER_GITHUB_API_TOKEN"],
+            use_bundle_exec: true
+        )
+    end
 end
