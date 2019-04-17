@@ -1,0 +1,56 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  before_all do
+    bundle_install
+    cocoapods
+  end
+
+  desc "Lints the code, autocorrecting any mistakes."
+  lane :lint do
+    swiftlint(mode: :autocorrect, output_file: "./fastlane/output/swiftlint_output", config_file: "./.swiftlint.yml")
+    swiftlint(mode: :lint, output_file: "./fastlane/output/swiftlint_output", config_file: "./.swiftlint.yml")
+  end
+
+  desc "Runs unit and UI tests and calculates coverage"
+  lane :test do
+    scan
+
+    xcov(
+      workspace: "PortfolioWatch.xcworkspace",
+      scheme: "PortfolioWatch", 
+      output_directory:"./fastlane/output/xcov_output",
+      minimum_coverage_percentage: 90.00,
+      derived_data_path: "./DerivedData",
+      only_project_targets: true,
+      ignore_file_path: "./fastlane/.xcovignore"
+    )
+  end
+
+  desc "Run all checks for code quality"
+  lane :verify do
+    lint
+    test
+  end
+
+  desc "Run all checks for CI"
+  lane :ci do
+    lint
+    test
+  end
+end
